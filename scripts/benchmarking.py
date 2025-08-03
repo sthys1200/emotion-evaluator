@@ -16,14 +16,16 @@ def main():
 
     data_path = args.data_dir + "/"+ args.dataset_file
 
+    # Ensure output directory exists
     output_dir = Path(args.output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)  # Ensure output directory exists
+    output_dir.mkdir(parents=True, exist_ok=True) 
     output_path = args.output_dir + "/" + args.output_file
 
+    # Load data
     data_loader = ReviewsDataLoader(data_path)
     df = data_loader.load_data()
 
-
+    # Extract input texts and labels
     input_texts = df['review'].to_list()
     labels = df['sentiment'].to_list()
 
@@ -42,6 +44,7 @@ def main():
         preds = model.predict_series(input_texts)
         end_time = time.time()
 
+        # Calculate metrics & write to file
         accuracy = accuracy_score(labels, preds)
         precision = precision_score(labels, preds, zero_division=0)
         recall = recall_score(labels, preds, zero_division=0)

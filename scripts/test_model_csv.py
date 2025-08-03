@@ -21,9 +21,7 @@ def main():
 
         model = MultiBert()
     
-    #loading data
-    output_dir = Path(args.output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)  # Ensure output directory exists
+    #load data
     data_path = args.data_dir + "/"+ args.dataset_file
     data_loader = ReviewsDataLoader(data_path)
     df = data_loader.load_data()
@@ -32,7 +30,9 @@ def main():
     input_texts = df['review'].to_list()
     preds = model.predict_series(input_texts)
 
-
+    #write predictions to output file
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)  # Ensure output directory exists
     output_df = df.copy()
     output_df['predictions'] = preds
 

@@ -13,7 +13,7 @@ class EmotionalEvaluator:
         label = self.pipeline(text)[0]['label']
         return label
     
-
+    #This method is used to predict a series of texts and generally does not need to be overridden
     def predict_series(self, text_array):
         labels = []
         for text in tqdm(text_array, desc= f"Predicting using {self.model_name}", unit="item"):
