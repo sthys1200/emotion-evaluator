@@ -15,7 +15,7 @@ A sentiment analysis evaluation framework that compares different transformer-ba
 emotion-evaluator/
 ├── data/
 │   └── IMDB-movie-reviews.csv     # Dataset (semicolon-separated)
-├── outputs/                       # Generated results and reports
+├── outputs/                       # Folder generated upon running scripts; output files will appear here
 ├── scripts/
 │   ├── benchmarking.py           # Model performance comparison
 │   ├── api.py                    # FastAPI web service
