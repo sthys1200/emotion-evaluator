@@ -3,6 +3,7 @@ from src.utils.data_loader import ReviewsDataLoader
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import argparse
 import time
+from pathlib import Path
 
 def main():
     parser = argparse.ArgumentParser()
@@ -14,6 +15,9 @@ def main():
 
 
     data_path = args.data_dir + "/"+ args.dataset_file
+
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)  # Ensure output directory exists
     output_path = args.output_dir + "/" + args.output_file
 
     data_loader = ReviewsDataLoader(data_path)

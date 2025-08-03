@@ -1,7 +1,7 @@
 from src.models.emotion_evaluators import DistilBert, MultiBert
 from src.utils.data_loader import ReviewsDataLoader
 import argparse
-
+from pathlib import Path
 
 def main():
     parser = argparse.ArgumentParser()
@@ -22,6 +22,8 @@ def main():
         model = MultiBert()
     
     #loading data
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)  # Ensure output directory exists
     data_path = args.data_dir + "/"+ args.dataset_file
     data_loader = ReviewsDataLoader(data_path)
     df = data_loader.load_data()
