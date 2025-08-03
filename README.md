@@ -7,8 +7,7 @@ A sentiment analysis evaluation framework that compares different transformer-ba
 - **Multiple Model Support**: Compare DistilBERT and multilingual BERT models
 - **Automated Benchmarking**: Comprehensive evaluation with accuracy, precision, recall, and F1-score metrics
 - **FastAPI Integration**: RESTful API for real-time sentiment prediction
-- **CSV Processing**: Batch processing of review datasets with automatic encoding detection
-- **Performance Tracking**: Speed benchmarking and detailed reporting
+- **CSV Processing**: Batch processing of review datasets
 
 ## Project Structure
 
@@ -19,7 +18,8 @@ emotion-evaluator/
 ├── outputs/                       # Generated results and reports
 ├── scripts/
 │   ├── benchmarking.py           # Model performance comparison
-│   ├── api.py         # FastAPI web service
+│   ├── api.py                    # FastAPI web service
+|   ├── example_api_test.py       # Example usage of API for prediction
 │   └── test_model_csv.py         # Batch CSV prediction
 ├── src/
 │   ├── models/
@@ -71,14 +71,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-### 1. Data Exploration
-
-Start with the Jupyter notebook to explore your dataset:
-```bash
-jupyter notebook exploration.ipynb
-```
-
-### 2. Batch Prediction on CSV
+### 1. Batch Prediction on CSV
 
 Process reviews from a CSV file:
 ```bash
@@ -97,17 +90,19 @@ python -m scripts.test_model_csv \
     --model DistilBERT
 ```
 
-### 3. Model Benchmarking
+### 2. Model Benchmarking
 
 Compare model performance:
 ```bash
 python -m scripts.benchmarking
 ```
 
-This generates a comprehensive report in `outputs/benchmark_report.txt` with:
-- Accuracy, Precision, Recall, F1-score
+This generates a short report in `outputs/benchmark_report.txt` with for each model:
+- Accuracy
+- Precision
+- Recall
+- F1-score
 - Processing speed comparison
-- Detailed metrics for each model
 
 ### 4. API Service
 
@@ -117,7 +112,7 @@ uvicorn scripts.test_model_api:app --reload
 ```
 
 The API will be available at `http://localhost:8000` with:
-- **POST** `/predict` - Analyze sentiment of text
+- **POST** `/predict` - Analyze sentiment of text (Positive or Negative)
 - **GET** `/health` - Health check endpoint
 - **GET** `/docs` - Interactive API documentation
 
@@ -132,6 +127,7 @@ response = requests.post(
 )
 print(response.json())  # {"sentiment": "Positive"}
 ```
+A copy of this snippet can be found under scripts/example_api_test.py
 
 ## Data Format
 
@@ -146,17 +142,6 @@ review;sentiment
 "Great movie with excellent acting";positive
 "Boring and poorly written";negative
 ```
-
-## Model Performance
-
-Based on benchmarking results, typical performance metrics:
-
-| Model | Accuracy | Precision | Recall | F1-Score | Speed |
-|-------|----------|-----------|--------|----------|-------|
-| DistilBERT | ~85-90% | ~0.85 | ~0.85 | ~0.85 | Fast |
-| MultiBERT | ~80-85% | ~0.80 | ~0.80 | ~0.80 | Moderate |
-
-*Note: Actual performance depends on your specific dataset*
 
 ## Configuration Options
 
@@ -186,7 +171,7 @@ class YourModel(EmotionalEvaluator):
         super().__init__("your-model-name")
     
     def predict_single(self, text):
-        # Implement your prediction logic
+        # Implement your prediction logic for individual predictions
         pass
 ```
 
@@ -202,24 +187,6 @@ class CustomDataLoader(ReviewsDataLoader):
         pass
 ```
 
-## Troubleshooting
-
-### Common Issues
-
-1. **Encoding Errors**: The data loader automatically detects encoding, but if issues persist, manually specify encoding in the CSV reader.
-
-2. **Memory Issues**: For large datasets, consider processing in batches by modifying the `predict_series` method.
-
-3. **Model Download Issues**: Ensure internet connectivity for automatic model downloads from Hugging Face.
-
-4. **API Port Conflicts**: Change the port using `uvicorn scripts.test_model_api:app --port 8001`
-
-### Performance Tips
-
-- Use DistilBERT for faster inference
-- Process data in smaller batches for memory efficiency
-- Consider GPU acceleration for large-scale processing
-
 ## Dependencies
 
 Key libraries used:
@@ -227,25 +194,6 @@ Key libraries used:
 - **fastapi**: Web API framework
 - **pandas**: Data manipulation
 - **scikit-learn**: Evaluation metrics
-- **chardet**: Encoding detection
+- **chardet**: Encoding detection (for datasets using different encodings)
 - **tqdm**: Progress bars
 
-## License
-
-This project is available under the MIT License. See the repository for full license details.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## Support
-
-For issues and questions:
-- Check the troubleshooting section above
-- Review the exploration notebook for data format examples
-- Examine the benchmark report for performance baselines
-Examine the benchmark report for performance baselines
