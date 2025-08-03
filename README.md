@@ -19,7 +19,7 @@ emotion-evaluator/
 ├── outputs/                       # Generated results and reports
 ├── scripts/
 │   ├── benchmarking.py           # Model performance comparison
-│   ├── test_model_api.py         # FastAPI web service
+│   ├── api.py         # FastAPI web service
 │   └── test_model_csv.py         # Batch CSV prediction
 ├── src/
 │   ├── models/
