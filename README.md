@@ -108,7 +108,7 @@ This generates a short report in `outputs/benchmark_report.txt` with for each mo
 
 Launch the FastAPI web service:
 ```bash
-uvicorn scripts.api:app --reload
+python -m uvicorn scripts.api:app --reload
 ```
 
 The API will be available at `http://localhost:8000` with:
