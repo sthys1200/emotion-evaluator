@@ -104,11 +104,11 @@ This generates a short report in `outputs/benchmark_report.txt` with for each mo
 - F1-score
 - Processing speed comparison
 
-### 4. API Service
+### 3. API Service
 
 Launch the FastAPI web service:
 ```bash
-uvicorn scripts.test_model_api:app --reload
+uvicorn scripts.api:app --reload
 ```
 
 The API will be available at `http://localhost:8000` with:
